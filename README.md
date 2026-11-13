@@ -3,7 +3,7 @@
 Service discovery em rede local com **UDP multicast** e Java NIO.2 (`DatagramChannel` + `MembershipKey`).
 Cada instância anuncia "estou vivo em host:porta" num grupo multicast, no estilo do **SSDP**, do **mDNS** e da descoberta por multicast do **Hazelcast** e do **JGroups**.
 
-![Painel do caramelo discovery: instâncias descobertas com barra de TTL e log de datagramas do grupo](docs/painel.png)
+![Painel do caramelo discovery ao vivo: instâncias descobertas com barra de TTL e log de datagramas do grupo](docs/painel.gif)
 
 ```
 ┌──────────────────┐   ALIVE a cada 5s    ┌─────────────────────────┐
