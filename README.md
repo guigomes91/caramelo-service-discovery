@@ -129,3 +129,7 @@ O frontend também roda fora do backend: abra `frontend/index.html?api=http://ho
 | Hazelcast (multicast join) | 224.2.2.3:54327 |
 | JGroups (stack UDP) | 228.8.8.8:45588 |
 | este projeto | 239.255.42.99:4446 |
+
+## Licença
+
+[MIT](LICENSE)
