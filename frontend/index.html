@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caramelo Discovery</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🐶</span>
+    <div>
+      <h1>caramelo <span>discovery</span></h1>
+      <p>Service discovery por UDP multicast · DatagramChannel + MembershipKey</p>
+    </div>
+  </div>
+  <div class="conn" id="conn"><span class="dot"></span><span id="conn-text">conectando…</span></div>
+</header>
+
+<main>
+  <section class="card group-card">
+    <div class="group-main">
+      <div>
+        <div class="label">grupo multicast</div>
+        <div class="group-addr mono" id="group-addr">–</div>
+        <div class="muted mono" id="group-iface">–</div>
+      </div>
+      <div class="membership">
+        <span class="pill" id="membership-pill">–</span>
+        <div class="actions">
+          <button class="btn primary" id="btn-join">join()</button>
+          <button class="btn" id="btn-leave">drop()</button>
+          <button class="btn ghost" id="btn-search" title="Pede para todas as instâncias se anunciarem agora">SEARCH *</button>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div><span class="stat-value" id="stat-services">0</span><span class="label">serviços</span></div>
+      <div><span class="stat-value" id="stat-instances">0</span><span class="label">instâncias vivas</span></div>
+      <div><span class="stat-value" id="stat-received">0</span><span class="label">datagramas recebidos</span></div>
+      <div><span class="stat-value" id="stat-malformed">0</span><span class="label">malformados</span></div>
+    </div>
+    <div class="blocked" id="blocked-wrap">
+      <span class="label">origens bloqueadas (memkey.block)</span>
+      <div id="blocked-list" class="chips"></div>
+      <form id="block-form" class="inline-form">
+        <input id="block-input" placeholder="IP da origem, ex.: 192.168.0.42" autocomplete="off">
+        <button class="btn small">block()</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Instâncias descobertas</h2>
+        <span class="muted">a barra é o TTL: chega a zero sem ALIVE, a instância expira</span>
+      </div>
+      <div id="services"></div>
+      <div class="empty" id="services-empty">Nenhuma instância no registro ainda. Rode um <code>announce</code> ou anuncie uma pelo painel.</div>
+    </section>
+
+    <aside class="side">
+      <section class="card">
+        <div class="card-head"><h2>Anunciar instância</h2></div>
+        <p class="muted small-text">Sobe um <code>ServiceAnnouncer</code> dentro do painel. Ele entra no grupo e manda ALIVE a cada intervalo.</p>
+        <form id="announce-form" class="stack">
+          <label>serviço<input name="service" value="orders-service" required></label>
+          <div class="row">
+            <label>porta<input name="port" type="number" min="1" max="65535" value="8080" required></label>
+            <label>intervalo (s)<input name="interval" type="number" min="1" max="60" value="3" required></label>
+            <label>ttl (s)<input name="ttl" type="number" min="2" max="300" value="9" required></label>
+          </div>
+          <button class="btn primary">anunciar</button>
+          <div class="error" id="announce-error"></div>
+        </form>
+        <div id="announcers"></div>
+      </section>
+
+      <section class="card log-card">
+        <div class="card-head">
+          <h2>Datagramas no grupo</h2>
+          <label class="toggle"><input type="checkbox" id="hide-renewals"> esconder ALIVE repetido</label>
+        </div>
+        <ol id="log" class="log mono"></ol>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
